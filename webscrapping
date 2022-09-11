@@ -1,0 +1,145 @@
+ Importing libraries
+
+from bs4 import BeautifulSoup
+import requests
+import time
+import datetime
+import smtplib
+
+# Connecting to Amazon and pulling in data
+
+url = 'https://www.amazon.ca/Gran-Turismo-7-Launch-PS5/dp/B09GTKZNYP'
+
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
+
+page = requests.get(url, headers=headers)
+
+soup1 = BeautifulSoup(page.content, 'html.parser')
+
+soup2 = BeautifulSoup(soup1.prettify(), 'html.parser')
+
+title = soup2.find(id='productTitle').get_text()
+
+price = soup2.find('span', 'a-offscreen').get_text()
+
+
+print(title)
+print(price)
+
+            Gran Turismo 7 Launch Edition – PS5
+           
+
+                          $89.00
+                         
+
+# Removing blank spaces and $ sign
+
+price = price.strip()[1:]
+title = title.strip()
+
+print(title)
+print(price)
+
+Gran Turismo 7 Launch Edition – PS5
+89.00
+
+# Creating a timestamp for the output to track when data was collected
+
+import datetime
+
+today = datetime.date.today()
+
+print(today)
+
+2022-03-19
+
+# Exporting data to CSV file
+
+import csv
+
+header = ['Title', 'Price', 'Date']
+data = [title, price, today]
+
+
+with open('amazon_dataset.csv', 'w', newline='', encoding='utf-8-sig') as f:
+    writer = csv.writer(f)
+    writer.writerow(header)
+    writer.writerow(data)
+
+import pandas as pd
+
+df = pd.read_csv(r'C:\Users\Jose\Documents\data_science\portfolio\python_web_scraping\amazon_dataset.csv')
+
+print(df)
+
+                                 Title  Price        Date
+0  Gran Turismo 7 Launch Edition – PS5   89.0  2022-03-19
+
+# Appending data to the CSV file
+
+with open('amazon_dataset.csv', 'a+', newline='', encoding='utf-8-sig') as f:
+    writer = csv.writer(f)
+    writer.writerow(data)
+
+# Creating a function with all of the above code
+
+def check_price():
+    url = 'https://www.amazon.ca/Gran-Turismo-7-Launch-PS5/dp/B09GTKZNYP'
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
+    page = requests.get(url, headers=headers)
+    soup1 = BeautifulSoup(page.content, 'html.parser')
+    soup2 = BeautifulSoup(soup1.prettify(), 'html.parser')
+    title = soup2.find(id='productTitle').get_text()
+    price = soup2.find('span', 'a-offscreen').get_text()
+    price = price.strip()[1:]
+    title = title.strip()
+    import datetime
+    today = datetime.date.today()
+    import csv
+    header = ['Title', 'Price', 'Date']
+    data = [title, price, today]
+    with open('amazon_dataset.csv', 'a+', newline='', encoding='utf-8-sig') as f:
+        writer = csv.writer(f)
+        writer.writerow(data)
+
+# Setting check_price to run after a set time and input data into the CSV file
+
+while(True):
+    check_price()
+    time.sleep(86400)
+
+import pandas as pd
+
+df = pd.read_csv(r'C:\Users\Jose\Documents\data_science\portfolio\python_web_scraping\amazon_dataset.csv')
+
+print(df)
+
+                                 Title  Price        Date
+0  Gran Turismo 7 Launch Edition – PS5   89.0  2022-03-19
+1  Gran Turismo 7 Launch Edition – PS5   89.0  2022-03-19
+2  Gran Turismo 7 Launch Edition – PS5   89.0  2022-03-19
+3  Gran Turismo 7 Launch Edition – PS5   89.0  2022-03-19
+4  Gran Turismo 7 Launch Edition – PS5   89.0  2022-03-19
+5  Gran Turismo 7 Launch Edition – PS5   89.0  2022-03-19
+6  Gran Turismo 7 Launch Edition – PS5   89.0  2022-03-19
+
+# Sending myself an e-mail when price is below a certain level
+
+def send_mail():
+    server = smtplib.SMTP_SSL('smtp.gmail.com',465)
+    server.ehlo()
+    #server.starttls()
+    server.ehlo()
+    server.login('jose.uvic@gmail.com','xxxxxxxxxxxxxx')
+    
+    subject = "Gran Turismo 7 Launch Edition – PS5 is below $70! Now is your chance to buy!"
+    body = "Jose, this is the moment you've been waiting for. Now is your chance to pick up  Gran Turismo 7 Launch Edition – PS5. Don't mess it up! Link here: https://www.amazon.ca/Gran-Turismo-7-Launch-PS5/dp/B09GTKZNYP
+
+    msg = f"Subject: {subject}\n\n{body}"
+    
+    server.sendmail(
+        'jose.uvic@gmail.com',
+        msg
+     
+    )
+
