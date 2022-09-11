@@ -68,7 +68,7 @@ with open('amazon_dataset.csv', 'w', newline='', encoding='utf-8-sig') as f:
 
 import pandas as pd
 
-df = pd.read_csv(r'C:\Users\Jose\Documents\data_science\portfolio\python_web_scraping\amazon_dataset.csv')
+df = pd.read_csv(r'C:\Users\arpan\Documents\data_science\portfolio\python_web_scraping\amazon_dataset.csv')
 
 print(df)
 
@@ -110,7 +110,7 @@ while(True):
 
 import pandas as pd
 
-df = pd.read_csv(r'C:\Users\Jose\Documents\data_science\portfolio\python_web_scraping\amazon_dataset.csv')
+df = pd.read_csv(r'C:\Users\arpan\Documents\data_science\portfolio\python_web_scraping\amazon_dataset.csv')
 
 print(df)
 
@@ -130,15 +130,15 @@ def send_mail():
     server.ehlo()
     #server.starttls()
     server.ehlo()
-    server.login('jose.uvic@gmail.com','xxxxxxxxxxxxxx')
+    server.login('itsarpan28@gmail.com','xxxxxxxxxxxxxx')
     
     subject = "Gran Turismo 7 Launch Edition – PS5 is below $70! Now is your chance to buy!"
-    body = "Jose, this is the moment you've been waiting for. Now is your chance to pick up  Gran Turismo 7 Launch Edition – PS5. Don't mess it up! Link here: https://www.amazon.ca/Gran-Turismo-7-Launch-PS5/dp/B09GTKZNYP
+    body = "Arpan, this is the moment you've been waiting for. Now is your chance to pick up  Gran Turismo 7 Launch Edition – PS5. Don't mess it up! Link here: https://www.amazon.ca/Gran-Turismo-7-Launch-PS5/dp/B09GTKZNYP
 
     msg = f"Subject: {subject}\n\n{body}"
     
     server.sendmail(
-        'jose.uvic@gmail.com',
+        'itsarpan28@gmail.com',
         msg
      
     )
